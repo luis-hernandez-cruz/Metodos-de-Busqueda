@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de Búsqueda | Estructura de Datos</title>
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+
+    <nav>
+        <p class="materia">Estructura de Datos</p>
+        <div class="menu-pestanas">
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#secuencial">Secuencial</a></li>
+                <li><a href="#binaria">Binaria</a></li>
+                <li><a href="#hash">Funciones de HASH</a></li>
+                <li><a href="#bibliografia">Bibliografía</a></li>
+                <li><a href="#estudiante">Estudiante</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <header id="inicio" class="contenido">
+            <h1>Algoritmos de Búsqueda</h1>
+            <p class="intro-destacada">La búsqueda es una de las operaciones más importantes en el procesamiento de información. Consiste en localizar un elemento dentro de una lista o conjunto de datos para recuperar información lo más rápido posible.</p>
+
+            <div class="grid-info">
+                <div class="info-card">
+                    <h2>Clasificación</h2>
+                    <p>Según el lugar donde se almacenan los datos:</p>
+                    <ul>
+                        <li><strong>Búsqueda interna:</strong> Elementos en la memoria principal (arreglos, listas enlazadas o árboles).</li>
+                        <li><strong>Búsqueda externa:</strong> Elementos en memoria secundaria (disco duro, cintas, SSD, etc.).</li>
+                    </ul>
+                    <p><strong>Métodos principales:</strong> Secuencial, Binaria, Por transformación de claves (Hash) y Árboles de búsqueda.</p>
+                </div>
+
+                <div class="info-card">
+                    <h2>Importancia y Complejidad</h2>
+                    <p>Permiten optimizar procesos y manejar grandes cantidades de información mediante la <strong>notación Big O</strong>, midiendo el equilibrio entre velocidad de ejecución y uso de memoria.</p>
+                </div>
+            </div>
+
+            <h2>Tabla Comparativa</h2>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>¿Requiere orden?</th>
+                            <th>Mejor Caso</th>
+                            <th>Caso Promedio</th>
+                            <th>Peor Caso</th>
+                            <th>Memoria Extra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Secuencial</strong></td>
+                            <td>No</td>
+                            <td><span class="badge">O(1)</span></td>
+                            <td><span class="badge">O(n)</span></td>
+                            <td><span class="badge">O(n)</span></td>
+                            <td>No — O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Binaria</strong></td>
+                            <td><strong>Sí</strong></td>
+                            <td><span class="badge">O(1)</span></td>
+                            <td><span class="badge">O(log n)</span></td>
+                            <td><span class="badge">O(log n)</span></td>
+                            <td>No — O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tabla Hash</strong></td>
+                            <td>No</td>
+                            <td><span class="badge">O(1)</span></td>
+                            <td><span class="badge">O(1)</span></td>
+                            <td><span class="badge">O(n)</span></td>
+                            <td><strong>Sí</strong> — O(n)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </header>
+
+        <section id="secuencial" class="contenido">
+            <h2>Búsqueda Secuencial</h2>
+            <p>Consiste en recorrer el vector, con sus datos no necesariamente ordenados, del principio hacia el final. Si se encuentra el valor buscado se da por finalizada la búsqueda; en caso contrario, tras haber recorrido todo el vector se indica que el elemento no está almacenado.</p>
+
+            <div class="cuando-usar">
+                <h3>¿Cuándo usarla?</h3>
+                <p>Es ideal para listas pequeñas, datos sin ordenar o cuando las búsquedas son poco frecuentes, ya que evita el costo de ordenar los datos previamente y no consume memoria adicional.</p>
+            </div>
+
+            <div class="ven-y-des">
+                <div class="ven">
+                    <h3>Ventajas</h3>
+                    <ul>
+                        <li>Es muy fácil de implementar.</li>
+                        <li>Funciona con datos ordenados y desordenados.</li>
+                        <li>Se aplica en arreglos y listas enlazadas.</li>
+                        <li>En el mejor caso su complejidad es <strong>O(1)</strong>.</li>
+                    </ul>
+                </div>
+                <div class="des">
+                    <h3>Desventajas</h3>
+                    <ul>
+                        <li>Baja eficiencia general.</li>
+                        <li>Se vuelve lenta con grandes volúmenes de datos.</li>
+                        <li>En caso promedio y peor caso es <strong>O(n)</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Ejemplo de implementación en C#</h4>
+<pre><code>static int BusquedaSecuencial(int[] numeros, int buscado) 
+{ 
+    for (int i = 0; i &lt; numeros.Length; i++) 
+    { 
+        if (numeros[i] == buscado) 
+        { 
+            Console.WriteLine($"Número encontrado en la posición {i}"); 
+            return i; 
+        } 
+    } 
+    Console.WriteLine("Número no encontrado"); 
+    return -1; 
+}</code></pre>
+            <div class="simulador-box">
+                <h3>Simulador</h3>
+                <div class="controles">
+                    <input type="number" id="input-sec" placeholder="Ej: 42" value="42">
+                    <button onclick="simularSecuencial()">Buscar</button>
+                </div>
+                <div id="array-sec" class="array-visual"></div>
+                <p id="msg-sec" class="sim-msg">Escribe un número del arreglo y presiona Buscar.</p>
+            </div>
+        </section>
+
+        <section id="binaria" class="contenido">
+            <h2>Búsqueda Binaria</h2>
+            <p>Consiste en dividir repetidamente a la mitad un arreglo <strong>previamente ordenado</strong>. Se compara el elemento buscado con el valor central; si son iguales, termina la búsqueda. Si el buscado es menor, se descarta la mitad superior; si es mayor, se descarta la mitad inferior, repitiendo el proceso hasta encontrarlo.</p>
+
+            <div class="cuando-usar">
+                <h3>¿Cuándo usarla?</h3>
+                <p>Se utiliza en listas grandes que ya están ordenadas y requieren búsquedas frecuentes. No es recomendable si los datos cambian constantemente, pues mantener el orden en cada inserción resulta costoso.</p>
+            </div>
+
+            <div class="ven-y-des">
+                <div class="ven">
+                    <h3>Ventajas</h3>
+                    <ul>
+                        <li>Reduce a la mitad el espacio de búsqueda en cada paso.</li>
+                        <li>Muy rápida incluso con grandes volúmenes de datos.</li>
+                        <li>Complejidad <strong>O(log n)</strong> en caso promedio y peor caso.</li>
+                        <li>Complejidad <strong>O(1)</strong> en el mejor caso.</li>
+                    </ul>
+                </div>
+                <div class="des">
+                    <h3>Desventajas</h3>
+                    <ul>
+                        <li>Exige que los datos estén previamente ordenados.</li>
+                        <li>No es adecuada para listas enlazadas.</li>
+                        <li>Mantener el orden en inserciones frecuentes es costoso.</li>
+                        <li>Más compleja de implementar que la secuencial.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Ejemplo de implementación en C#</h4>
+<pre><code>static int BusquedaBinaria(int[] numeros, int buscado) 
+{ 
+    int inferior = 0; 
+    int superior = numeros.Length - 1; 
+
+    while (inferior &lt;= superior) 
+    { 
+        int medio = inferior + (superior - inferior) / 2; 
+
+        if (numeros[medio] == buscado) 
+        { 
+            Console.WriteLine($"Número encontrado en la posición {medio}."); 
+            return medio; 
+        } 
+        if (numeros[medio] &lt; buscado) 
+            inferior = medio + 1; 
+        else 
+            superior = medio - 1; 
+    } 
+
+    Console.WriteLine("Número no encontrado."); 
+    return -1; 
+}</code></pre>
+            <div class="simulador-box">
+                <h3>Simulador</h3>
+                <div class="controles">
+                    <input type="number" id="input-bin" placeholder="Ej: 56" value="56">
+                    <button onclick="simularBinaria()">Buscar</button>
+                </div>
+                <div id="array-bin" class="array-visual"></div>
+                <p id="msg-bin" class="sim-msg">Escribe un número del arreglo ordenado y presiona Buscar.</p>
+            </div>
+        </section>
+
+        <section id="hash" class="contenido">
+            <h2>Búsqueda por Funciones de HASH</h2>
+            <p>Consiste en aplicar una función hash a la clave del elemento buscado para obtener directamente una dirección (índice) dentro del vector, sin necesidad de que los datos estén ordenados. En caso de colisión, se aplican métodos de resolución para explorar posiciones alternativas.</p>
+
+            <div class="cuando-usar">
+                <h3>¿Cuándo usarla?</h3>
+                <p>Ideal cuando se requiere máxima velocidad de acceso mediante claves únicas (como un ID o usuario) en grandes volúmenes de datos. No sirve para buscar rangos de valores (ej. números entre 10 y 50).</p>
+            </div>
+
+            <div class="ven-y-des">
+                <div class="ven">
+                    <h3>Ventajas</h3>
+                    <ul>
+                        <li>Acceso casi directo mediante transformación de claves.</li>
+                        <li>No requiere que los datos estén ordenados.</li>
+                        <li>Extremadamente rápida con una buena función hash.</li>
+                        <li>Complejidad <strong>O(1)</strong> en el mejor caso y promedio.</li>
+                    </ul>
+                </div>
+                <div class="des">
+                    <h3>Desventajas</h3>
+                    <ul>
+                        <li>Manejo de colisiones entre claves.</li>
+                        <li>Requiere espacio adicional de memoria.</li>
+                        <li>Elegir una buena función hash no siempre es sencillo.</li>
+                        <li>En el peor caso puede degradarse a O(n).</li>
+                    </ul>
+                </div>    
+            </div>
+            <h4>Ejemplo de implementación en C#</h4>                
+            <pre><code>
+static void BusquedaHash()
+{
+    Dictionary&lt;int, string&gt; tablaHash = new Dictionary&lt;int, string&gt;();
+    tablaHash.Add(101, "Ana");
+    tablaHash.Add(205, "Carlos");
+    tablaHash.Add(309, "Luis");
+    int claveBuscada = 205;
+    if (tablaHash.ContainsKey(claveBuscada))
+    {
+        Console.WriteLine($"Elemento encontrado: {tablaHash[claveBuscada]}");
+    }
+    else
+    {
+        Console.WriteLine("Clave no encontrada en la tabla.");
+    }
+}                        
+            </code></pre>
+            <div class="simulador-box">
+                <h3>Simulador</h3>
+                <div class="controles">
+                    <input type="number" id="input-hash" placeholder="Ej: 23" value="23">
+                    <button onclick="simularHash()">Buscar Clave</button>
+                </div>
+                <div id="array-hash" class="array-visual"></div>
+                <p id="msg-hash" class="sim-msg">Prueba buscar 14, 23, 31, 45 o un número que no esté.</p>
+            </div>
+        </section>
+
+        <section id="bibliografia" class="contenido">
+            <h2>Bibliografía y Referencias</h2>
+
+            <div class="lista-bibliografia">
+                <article class="ref-item">
+                    <p>Martín, G., Toledo, F., &amp; Cerverón, V. (1995). Estructuras de datos (Capítulo 5). En <em>Fundamentos de informática y programación</em> (pp. 171–211). Ediciones VJ.</p>
+                </article>
+
+                <article class="ref-item">
+                    <p>Joyanes Aguilar, L. (2020). <em>Fundamentos de programación: Algoritmos, estructura de datos y objetos</em> (5.ª ed.). McGraw-Hill Interamericana.</p>
+                </article>
+
+                <article class="ref-item">
+                    <p>Cormen, T. H., Leiserson, C. E., Rivest, R. L., &amp; Stein, C. (2022). <em>Introduction to Algorithms</em> (4.ª ed.). MIT Press.</p>
+                </article>
+
+                <article class="ref-item">
+                    <p>Cairó, O., &amp; Guardati, S. (2006). <em>Estructuras de datos</em> (3.ª ed.). McGraw-Hill.</p>
+                </article>
+
+                <article class="ref-item">
+                    <p>Fager, J., Pantoja Yépez, W. L., Villacrés, M., Páez Martínez, L. A., Ochoa, D., &amp; Cuadros-Vargas, E. (2014). <em>Estructuras de datos</em> (1.ª ed.). Iniciativa Latinoamericana de Libros de Texto Abiertos (LATIn).</p>
+                </article>
+
+                <article class="ref-item">
+                    <p>Microsoft Learn. (2025). <em>Dictionary&lt;TKey,TValue&gt; Class (System.Collections.Generic)</em>. Documentación oficial de .NET y C#.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="estudiante" class="contenido">
+            <div class="perfil-estudiante">
+                <div class="perfil-header">
+                    <div>
+                        <h3>Luis Damián Hernández Cruz</h3>
+                        <p class="carrera-tag">Ingeniería en Sistemas Computacionales</p>
+                    </div>
+                </div>
+
+                <div class="datos-grid">
+                    <div class="dato-item">
+                        <span class="dato-etiqueta">Número de control</span>
+                        <span class="dato-valor">25410677</span>
+                    </div>
+                    <div class="dato-item">
+                        <span class="dato-etiqueta">Materia</span>
+                        <span class="dato-valor">Estructura de Datos</span>
+                    </div>
+                    <div class="dato-item">
+                        <span class="dato-etiqueta">Unidad</span>
+                        <span class="dato-valor">VI</span>
+                    </div>
+                    <div class="dato-item">
+                        <span class="dato-etiqueta">Docente</span>
+                        <span class="dato-valor">MSC. Myrna Villegas Gaytán</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const datosSecuencial = Array.of(15, 8, 42, 4, 23, 16, 9, 31);
+        const datosBinaria = Array.of(4, 8, 15, 16, 23, 31, 42, 56, 70);
+        const tablaHash = [14, null, 23, 31, null, null, 45]; 
+
+        const esperar = (ms) => new Promise(res => setTimeout(res, ms));
+
+        function dibujarArreglo(idContenedor, arreglo) {
+            const cont = document.getElementById(idContenedor);
+            cont.innerHTML = '';
+            arreglo.forEach((val, idx) => {
+                const div = document.createElement('div');
+                div.className = 'celda';
+                div.id = `${idContenedor}-celda-${idx}`;
+                div.innerHTML = `${val !== null ? val : '-'}<span>[${idx}]</span>`;
+                cont.appendChild(div);
+            });
+        }
+
+        dibujarArreglo('array-sec', datosSecuencial);
+        dibujarArreglo('array-bin', datosBinaria);
+        dibujarArreglo('array-hash', tablaHash);
+
+        async function simularSecuencial() {
+            const buscado = parseInt(document.getElementById('input-sec').value);
+            const msg = document.getElementById('msg-sec');
+            dibujarArreglo('array-sec', datosSecuencial);
+
+            for (let i = 0; i < datosSecuencial.length; i++) {
+                const celda = document.getElementById(`array-sec-celda-${i}`);
+                celda.classList.add('evaluando');
+                msg.textContent = `Comparando índice [${i}] (${datosSecuencial[i]}) con ${buscado}...`;
+                await esperar(600);
+
+                if (datosSecuencial[i] === buscado) {
+                    celda.classList.remove('evaluando');
+                    celda.classList.add('encontrado');
+                    msg.textContent = `¡Encontrado en el índice [${i}] tras ${i + 1} pasos!`;
+                    return;
+                }
+                celda.classList.remove('evaluando');
+                celda.classList.add('descartado');
+            }
+            msg.textContent = `El número ${buscado} no está en el arreglo.`;
+        }
+
+        async function simularBinaria() {
+            const buscado = parseInt(document.getElementById('input-bin').value);
+            const msg = document.getElementById('msg-bin');
+            dibujarArreglo('array-bin', datosBinaria);
+
+            let inf = 0, sup = datosBinaria.length - 1, pasos = 0;
+
+            while (inf <= sup) {
+                pasos++;
+                let medio = Math.floor((inf + sup) / 2);
+                const celdaMedio = document.getElementById(`array-bin-celda-${medio}`);
+                celdaMedio.classList.add('evaluando');
+                msg.textContent = `Paso ${pasos}: Rango [${inf}..${sup}]. Revisando centro [${medio}] = ${datosBinaria[medio]}`;
+                await esperar(900);
+
+                if (datosBinaria[medio] === buscado) {
+                    celdaMedio.classList.remove('evaluando');
+                    celdaMedio.classList.add('encontrado');
+                    msg.textContent = `¡Encontrado en [${medio}] en solo ${pasos} pasos!`;
+                    return;
+                }
+
+                celdaMedio.classList.remove('evaluando');
+                if (datosBinaria[medio] < buscado) {
+                    for (let i = inf; i <= medio; i++) document.getElementById(`array-bin-celda-${i}`).classList.add('descartado');
+                    inf = medio + 1;
+                } else {
+                    for (let i = medio; i <= sup; i++) document.getElementById(`array-bin-celda-${i}`).classList.add('descartado');
+                    sup = medio - 1;
+                }
+            }
+            msg.textContent = `El número ${buscado} no se encuentra en la lista.`;
+        }
+
+        async function simularHash() {
+            const buscado = parseInt(document.getElementById('input-hash').value);
+            const msg = document.getElementById('msg-hash');
+            dibujarArreglo('array-hash', tablaHash);
+
+            if (isNaN(buscado)) return;
+
+            const indice = Math.abs(buscado) % tablaHash.length;
+            msg.textContent = `Calculando Hash: ${buscado} % 7 = índice [${indice}]...`;
+            const celda = document.getElementById(`array-hash-celda-${indice}`);
+            celda.classList.add('evaluando');
+            await esperar(800);
+
+            celda.classList.remove('evaluando');
+            if (tablaHash[indice] === buscado) {
+                celda.classList.add('encontrado');
+                msg.textContent = `¡Acceso directo O(1)! Encontrado en el índice [${indice}].`;
+            } else {
+                celda.classList.add('descartado');
+                msg.textContent = `Índice [${indice}] contiene "${tablaHash[indice] ?? 'vacío'}". El ${buscado} no está.`;
+            }
+        }
+    </script>
+</body>
+</html>
