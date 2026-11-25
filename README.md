@@ -1,4 +1,4 @@
-# Métodos de Búsqueda
+# Unidad VI - Métodos de Búsqueda
 ## Datos del alumno
 Nombre: Luis Damián Hernández Cruz \
 Número de control: 25410677 \
